@@ -51,9 +51,13 @@ int main(void) {
    return 0;
 }
 
-void SAIR();
+void SAIR() {
 
-void CRIAR();
+}
+
+void CRIAR() {
+
+}
 
 void UNIR() {
 
@@ -86,7 +90,9 @@ void UNIR() {
    }
 }
 
-void ENCONTRAR();
+void ENCONTRAR() {
+   
+}
 
 void EXIBIR() {
 

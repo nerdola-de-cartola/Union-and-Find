@@ -1,9 +1,8 @@
 #include "union_find.h"
-#include "avl.c"
 
 Node *Tree = NULL;
 
-Node Make_Set(double x){
+Node *Make_Set(double x){
     insert(&Tree, x);
 
     return Find_set(x);
@@ -50,15 +49,15 @@ void Destroy_set(double x){
     removeNode(Tree, tmp1->valor);
 }
 
-void Destroy_setI(double x){
-    Node * tmp2;
+void Destroy_setI(Node * x){
+    Node * tmp = NULL;
 
     while(x->proximo != NULL){
-        tmp2 = tmp1;
-        while(tmp2->proximo != NULL){
-            tmp2 = tmp2->proximo;
+        tmp = x;
+        while(tmp->proximo != NULL){
+            tmp = tmp->proximo;
         }
-        removeNode(Tree, tmp2->valor);
+        removeNode(Tree, tmp->valor);
     }
     removeNode(Tree, x->valor);
 }
@@ -86,10 +85,12 @@ Node * Find_set(double x){
     
     return tmp->representante;
 }
+/*
+TODO
+int Size_setI(Node * i){
 
-int Size_setI(int i){
-   
 }
+*/
 
 void Show_Set(double x) {
     Node *tmp = (Node *) malloc(sizeof(Node));

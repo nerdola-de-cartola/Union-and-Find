@@ -1,4 +1,4 @@
-#include "union_find.h"
+#include "avl.h"
 
 Node * createTree() {
     return NULL;
@@ -12,7 +12,7 @@ Node *createNode(double valor){
     node->left = NULL;
     node->right = NULL;
 
-    node->representante = &node;
+    node->representante = node;
     node->proximo = NULL;   
 
     return node;
@@ -104,7 +104,7 @@ int getBalance(Node *root){
 
 void prefix(Node *root){
     if(root != NULL){
-        printf("%d ", root->valor);
+        printf("%f ", root->valor);
         prefix(root->left);
         prefix(root->right);
     }
@@ -113,7 +113,7 @@ void prefix(Node *root){
 void infix(Node *root){
     if(root != NULL){
         infix(root->left);
-        printf("%d ", root->valor);
+        printf("%f ", root->valor);
         infix(root->right);
     }
 }
@@ -122,7 +122,7 @@ void postfix(Node *root){
     if(root != NULL){
         postfix(root->left);
         postfix(root->right);
-        printf("%d ", root->valor);
+        printf("%f ", root->valor);
     }
 }
 
@@ -135,7 +135,7 @@ void printTree(Node *root, int repeater){
         }
 
         printf(">");
-        printf(  "{ valor : %d, Height : %d, Balance Factor : %d }\n", root->valor, root->height, getBalance(root) );
+        printf(  "{ valor : %f, Height : %d, Balance Factor : %d }\n", root->valor, root->height, getBalance(root) );
 
         if(root->right != NULL) printTree(root->right, repeater + 2);
     }
@@ -177,7 +177,7 @@ Node *rotateR(Node *root){
     return newRoot;
 }
 
-Node *removeNode(Node *root, int key) {
+Node *removeNode(Node *root, double key) {
     if(root == NULL) return root;
 
 
@@ -248,7 +248,7 @@ void destroy(Node **root) {
     *root = destroyTree(*root);
 }
 
-void delete(Node **root, int key) {
+void delete(Node **root, double key) {
     *root = removeNode(*root, key);
 }
 
@@ -300,7 +300,7 @@ Node *merge(Node *root1, Node *root2) {
 void processLevel(Node *root, int level) {
     if(root != NULL) {
         if(level == 0) {
-            printf("%d ", root->valor);
+            printf("%f ", root->valor);
         } else {
             if(level > 0) {
                 processLevel(root->left, level - 1);

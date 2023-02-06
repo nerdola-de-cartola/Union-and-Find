@@ -1,0 +1,6 @@
+{
+   "files.associations": {
+      "*.s": "asm-intel-x86-generic",
+      "union_find.h": "c"
+   }
+}
