@@ -53,6 +53,11 @@ int main(void) {
 
 void SAIR() {
 
+   /*TODO
+   Liberar a memoria do programa
+   */
+
+   exit(0);
 }
 
 void CRIAR() {
