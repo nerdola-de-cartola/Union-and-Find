@@ -68,4 +68,13 @@ void printMenu();
  */
 void Init_Sets();
 
+/**
+ * @brief Verifica se o index é valido para acessar um conjunto
+ * 
+ * @param index 
+ * @return true se é valido
+ * @return false se é inválido
+ */
+bool checkIndex(int index);
+
 #endif

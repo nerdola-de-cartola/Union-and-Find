@@ -1,4 +1,5 @@
 #include "lib/union_find.h"
+#include "lib/avl.h"
 #include "main.h"
 
 Node *CONJUNTOS[MAX_SIZE];
@@ -62,6 +63,31 @@ void SAIR() {
 
 void CRIAR() {
 
+   int index;
+   double valor;
+
+   while(true) {
+      printf("Digite o código do conjunto desejado, entre 0 e 100\n");
+      scanf("%d", &index);
+
+      if(!checkIndex(index)) {
+         printf("Código inválido\n");
+         continue;
+      }
+
+      if(CONJUNTOS[index] != NULL) {
+         printf("Esse conjunto já está sendo utilizado, por favor escolha outro código\n");
+         continue;
+      }
+
+      break;
+   }
+
+   printf("Digite o valor que deseja inserir nesse conjunto\n");
+   scanf("%lf", &valor);
+
+   CONJUNTOS[index] = Make_Set(valor);
+
 }
 
 void UNIR() {
@@ -117,7 +143,7 @@ void EXIBIR() {
          return;
 
       case 1:
-         /* code */
+         
          break;
 
       case 2:
@@ -220,4 +246,9 @@ void Init_Sets() {
    for(i = 0; i < MAX_SIZE; i++)
       CONJUNTOS[i] = NULL;
    
+}
+
+bool checkIndex(int index) {
+   if(index < 0 || index >= MAX_SIZE) return false;
+   return true;
 }
