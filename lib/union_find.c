@@ -8,102 +8,102 @@ Node *Make_Set(double x){
     return Find_set(x);
 }
 
-void Union(double x, double y){
-    Node *tmp1 = Find_set(x);
-    Node *tmp2 = Find_set(y);
-
-    while(tmp1->proximo != NULL){
-        tmp1 = tmp1->proximo;
-    }
-
-    tmp1->proximo = tmp2;
-
-    while(tmp2 != NULL){
-        tmp2->representante = tmp1->representante;
-    }
+void Show_Set(double x) {
+    Node *tmp = Find_set(x);
+    
+    Show_SetI(tmp);
 }
 
-void UnionI(Node *x, Node *y){
-    while(x->proximo != NULL){
+void Show_SetI(Node *x) {
+    while(x != NULL) {
+        printf("%lf ", x->valor);
         x = x->proximo;
     }
-
-    x->proximo = y;
-
-    while(y != NULL){
-        y->representante = x->representante;
-    }
+    printf("\n");    
 }
 
 void Destroy_set(double x){
     Node *tmp1 = Find_set(x);
-    Node *tmp2;
 
-    while(tmp1->proximo != NULL){
-        tmp2 = tmp1;
-        while(tmp2->proximo != NULL){
-            tmp2 = tmp2->proximo;
-        }
-        removeNode(Tree, tmp2->valor);
-    }
-    removeNode(Tree, tmp1->valor);
+    Destroy_setI(tmp1);
 }
 
 void Destroy_setI(Node * x){
     Node * tmp = NULL;
 
+    if(x == NULL)
+        return;
+
     while(x->proximo != NULL){
         tmp = x;
-        while(tmp->proximo != NULL){
+
+        while(tmp->proximo->proximo != NULL && tmp->proximo != NULL){
             tmp = tmp->proximo;
         }
-        removeNode(Tree, tmp->valor);
+        
+        delete(&Tree, tmp->proximo->valor);
+        tmp->proximo = NULL;
+
     }
-    removeNode(Tree, x->valor);
+
+    delete(&Tree, x->valor);
 }
 
+int Union(double x, double y){
+    Node *tmp1 = Find_set(x);
+    Node *tmp2 = Find_set(y);
 
-int Size_set(double x){
-    Node *tmp = (Node*) malloc(sizeof(Node));
-    int size = 0;
-    tmp = Find_set(x);
+    if(tmp1 == NULL)
+        return -1;
     
-    if(tmp != NULL) {
-        while(tmp->proximo != NULL) {
-            size++;
-            tmp = tmp->proximo;
+    if(tmp2 == NULL)
+        return -2;
+
+    UnionI(tmp1, tmp2);
+
+    return 0;
+}
+
+void UnionI(Node *x, Node *y){
+    if(x != NULL || y != NULL){
+
+
+        while(x->proximo != NULL){
+            x = x->proximo;
+        }
+
+        x->proximo = y;
+
+        while(y != NULL){
+            y->representante = x->representante;
+
+            y = y->proximo;
         }
     }
-    else return 0;
-
-    free(tmp);
-    return size;
 }
 
 Node * Find_set(double x){
     Node *tmp = searchTree(Tree, x);
     
+    if(tmp == NULL)
+        return NULL;
+
     return tmp->representante;
 }
-/*
-TODO
-int Size_setI(Node * i){
 
-}
-*/
-
-void Show_Set(double x) {
-    Node *tmp = (Node *) malloc(sizeof(Node));
-    tmp = Find_set(x);
+int Size_set(double x){
+    Node *tmp = Find_set(x);
     
-    if(tmp == NULL) printf("Conjunto nao existe\n");
-    else {
-        while(tmp->proximo != NULL) {
-            printf("%lf ", tmp->valor);
-            tmp = tmp->proximo;
-        }
-        printf("\n");
-    }
-    free(tmp);
+    return Size_setI(tmp);
 }
 
+int Size_setI(Node * x){
+    int size = 0;
+        
+    while(x != NULL) {
+        size++;
+        x = x->proximo;
+    }
+
+    return size;
+}

@@ -16,7 +16,7 @@ bin/main.exe: bin/union_find.o bin/main.o bin/avl.o
 	$(CC) bin/main.o bin/union_find.o bin/avl.o -o $@ $(CFLAGS)
 
 run: bin/main.exe
-	./bin/main.exe
+	valgrind ./bin/main.exe
 
 clear:
 	rm *.o -rf

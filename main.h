@@ -77,4 +77,13 @@ void Init_Sets();
  */
 bool checkIndex(int index);
 
+/**
+ * @brief Retorna o index do vetor CONJUNTOS que contém x como representante
+ * 
+ * @param x 
+ * @return int index do vetor CONJUNTOS
+ * @return ou -1 caso x não seja encontrado
+ */
+int findIndex(Node *x);
+
 #endif

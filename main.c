@@ -54,9 +54,7 @@ int main(void) {
 
 void SAIR() {
 
-   /*TODO
-   Liberar a memoria do programa
-   */
+   destroy(&Tree);
 
    exit(0);
 }
@@ -92,7 +90,10 @@ void CRIAR() {
 
 void UNIR() {
 
-   int type = 0;
+   int type = 0, error_code;
+   int i, j;
+   double x, y;
+   int index_to_erase;
 
    printf(
       "Como você deseja unir conjuntos?\n"\
@@ -108,11 +109,59 @@ void UNIR() {
          return;
 
       case 1:
-         /* code */
+         while (true) {
+
+            printf("Insira o Índice do primeiro conjunto: ");
+            scanf("%d", &i);
+            printf("Insira o Índice do segundo conjunto: ");
+            scanf("%d", &j);
+
+            if(checkIndex(i) && checkIndex(j)) {
+               break;
+            }
+
+            printf("Índice inválido\n");
+            
+         }
+         
+         UnionI(CONJUNTOS[i], CONJUNTOS[j]);
+
+         CONJUNTOS[j] = NULL;
+
+         printf("A união dos conjuntos agora está no índice: %d\n", i);
+
          break;
 
       case 2:
-         /* code */
+         
+         while (true) {
+
+            printf("Insira o primeiro valor: ");
+            scanf("%lf", &x);
+            printf("Insira o segundo valor: ");
+            scanf("%lf", &y);
+
+            index_to_erase = findIndex(Find_set(y));
+
+            error_code = Union(x, y);
+            
+            if(error_code == -1) {
+               printf("O primeiro valor não existe em nenhum conjunto, tente novamente\n");
+            }
+
+            if(error_code == -2) {
+               printf("O segundo valor não existe em nenhum conjunto, tente novamente\n");
+            }
+            
+            break;
+         }
+
+         CONJUNTOS[index_to_erase] = NULL;
+
+         i = findIndex(Find_set(x));
+
+         printf("A união dos conjuntos agora está no índice: %d\n", i);
+
          break;
       
       default:
@@ -122,12 +171,27 @@ void UNIR() {
 }
 
 void ENCONTRAR() {
+   double x;
+   int i;
+
+   printf("Insira o valor que deseja encontrar: ");
+   scanf("%lf", &x);
    
+   i = findIndex(Find_set(x));
+
+   if(i == -1){
+      printf("Conjunto não existe!\n");
+      return;
+   }
+   
+   printf("O valor %lf esta no conjunto de índice: %d\n", x, i);
 }
 
 void EXIBIR() {
-
+   
    int type = 0;
+   int index;
+   double value;
 
    printf(
       "Como você deseja exibir um conjunto?\n"\
@@ -143,11 +207,17 @@ void EXIBIR() {
          return;
 
       case 1:
-         
+         printf("Digite o índice do conjunto que deseja exibir: \n");
+         scanf("%d", &index);
+
+         Show_SetI(CONJUNTOS[index]);
          break;
 
       case 2:
-         /* code */
+         printf("Digite o valor no conjunto que deseja exibir: \n");
+         scanf("%lf", &value);
+
+         Show_Set(value);
          break;
       
       default:
@@ -159,6 +229,8 @@ void EXIBIR() {
 void TAMANHO() {
 
    int type = 0;
+   int index;
+   double value;
 
    printf(
       "Como você deseja verificar o tamanho de um conjunto?\n"\
@@ -174,11 +246,17 @@ void TAMANHO() {
          return;
 
       case 1:
-         /* code */
+         printf("Digite o índice do conjunto que deseja obter o tamanho: \n");
+         scanf("%d", &index);
+
+         printf("Size: %d\n", Size_setI(CONJUNTOS[index]));
          break;
 
       case 2:
-         /* code */
+         printf("Digite o valor no conjunto que deseja obter o tamanho: \n");
+         scanf("%lf", &value);
+
+         printf("Size: %d\n", Size_set(value));
          break;
       
       default:
@@ -191,6 +269,9 @@ void TAMANHO() {
 void DESTRUIR() {
 
    int type = 0;
+   int index;
+   double value;
+   int index_to_erase;
 
    printf(
       "Como você deseja destruir um conjunto\n"\
@@ -206,11 +287,21 @@ void DESTRUIR() {
          return;
 
       case 1:
-         /* code */
+         printf("Digite o índice do conjunto que deseja destruir: \n");
+         scanf("%d", &index);
+
+         Destroy_setI(CONJUNTOS[index]);
+         CONJUNTOS[index] = NULL;
          break;
 
       case 2:
-         /* code */
+         printf("Digite o valor no conjunto que deseja destruir: \n");
+         scanf("%lf", &value);
+
+         index_to_erase = findIndex(Find_set(value));
+         Destroy_set(value);
+
+         CONJUNTOS[index_to_erase] = NULL;
          break;
       
       default:
@@ -251,4 +342,22 @@ void Init_Sets() {
 bool checkIndex(int index) {
    if(index < 0 || index >= MAX_SIZE) return false;
    return true;
+}
+
+int findIndex(Node *x) {
+
+   int i;
+
+   if(x == NULL)
+      return -1;
+
+   for(i = 0; i < MAX_SIZE; i++) {
+
+      if(CONJUNTOS[i] == x->representante)
+         return i;
+
+   }
+
+   return -1;
+
 }

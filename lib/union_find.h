@@ -6,6 +6,8 @@
 
 #include "avl.h"
 
+extern Node * Tree;
+
 /**
  * @brief Cria um conjunto contendo somente o valor x
  * 
@@ -26,7 +28,7 @@ void Show_Set(double x);
  * 
  * @param i Índice do conjunto
  */
-void Show_SetI(int i);
+void Show_SetI(Node * x);
 
 /**
  * @brief Libera a memoria do conjunto que contém x
@@ -49,7 +51,7 @@ void Destroy_setI(Node * x);
  * @param x Ponteiro que aponta para x
  * @param y Ponteiro que aponta para y
  */
-void Union(double x, double y);
+int Union(double x, double y);
 
 /**
  * @brief Faz a união do conjunto i com
@@ -83,7 +85,7 @@ int Size_set(double x);
  * @param i Índice do conjunto
  * @return int 
  */
-int Size_setI(Node * i);
+int Size_setI(Node * x);
 
 
 
